@@ -45,6 +45,9 @@ function getYouTubeApiClientComplianceState(options = {}) {
   if (!nonEmpty(project.projectId)) blockers.push("API Project ID is missing");
   if (project.ownerApiClientId !== client.id) blockers.push("API Project owner does not match this API Client");
   if (project.credentialsExclusiveToClient !== true) blockers.push("API key must be exclusive to this API Client");
+  if (project.crossClientUniquenessReviewStatus !== "approved" || !nonEmpty(project.crossClientUniquenessEvidenceRef)) {
+    blockers.push("central cross-client API Project uniqueness review is not approved with evidence");
+  }
   if (project.apiKeyProjectId !== project.projectId) blockers.push("API key project mapping does not match the assigned API Project");
   if (!/^[a-f0-9]{64}$/.test(project.apiKeyFingerprint || "")) blockers.push("approved API key SHA-256 fingerprint is missing");
 
