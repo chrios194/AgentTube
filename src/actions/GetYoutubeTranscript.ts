@@ -6,18 +6,13 @@ import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../convex/_generated/api";
 import { currentUser } from "@clerk/nextjs/server";
 import { FeatureFlag, featureFlagEvents } from "@/lib/flags";
+import { assertYouTubeTranscriptAccess } from "@/lib/youtube-api-client-compliance";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 export interface TranscriptEntry {
   text: string;
   timestamp: string;
 }
-
-const youtube = await Innertube.create({
-  lang: "en",
-  location: "US",
-  retrieve_player: false,
-});
 
 function formatTimestamp(start_ms: number): string {
   const minutes = Math.floor(start_ms / 60000);
@@ -27,6 +22,12 @@ function formatTimestamp(start_ms: number): string {
 
 const fetchTranscript = async (videoId: string): Promise<TranscriptEntry[]> => {
   try {
+    assertYouTubeTranscriptAccess();
+    const youtube = await Innertube.create({
+      lang: "en",
+      location: "US",
+      retrieve_player: false,
+    });
     const info = await youtube.getInfo(videoId);
     const transcriptData = await info.getTranscript();
 
@@ -81,7 +82,13 @@ export const GetYoutubeTranscript = async (videoId: string) => {
       cache:
         "this video is transcribed using a token, the transcript is now saved in the database.",
     };
-  } catch {
+  } catch (error) {
+    if ((error as { code?: string })?.code === "YOUTUBE_TRANSCRIPT_ACCESS_BLOCKED") {
+      return {
+        transcript: [],
+        cache: "Transcript retrieval is disabled pending a separate YouTube Terms-of-Service review.",
+      };
+    }
     return {
       transcript: [],
       cache: "Error fetching the transcript.",
