@@ -2,14 +2,13 @@
 
 import { google } from "googleapis";
 import { VideoDetails } from "@/types/types";
-
-const youtube = google.youtube({
-  version: "v3",
-  auth: process.env.YOUTUBE_API_KEY,
-});
+import { assertYouTubeApiClientCompliance } from "@/lib/youtube-api-client-compliance";
 
 const GetVideoDetails = async (videoId: string) => {
   try {
+    const apiKey = process.env.YOUTUBE_API_KEY;
+    assertYouTubeApiClientCompliance(apiKey);
+    const youtube = google.youtube({ version: "v3", auth: apiKey });
     const response = await youtube.videos.list({
       part: ["statistics", "snippet"],
       id: [videoId],
@@ -52,7 +51,16 @@ const GetVideoDetails = async (videoId: string) => {
     };
 
     return { video };
-  } catch {
+  } catch (error) {
+    if ((error as { code?: string })?.code === "YOUTUBE_API_CLIENT_COMPLIANCE_BLOCKED") {
+      return {
+        error: {
+          code: "YOUTUBE_API_CLIENT_COMPLIANCE_BLOCKED",
+          title: "YouTube API access is disabled",
+          description: "The API Client boundary, child-directed assessment, required review, and exclusive API Project are not approved yet.",
+        },
+      };
+    }
     return {
       error: {
         title: "Video Error",
