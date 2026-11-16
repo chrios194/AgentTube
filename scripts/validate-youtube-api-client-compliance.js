@@ -10,6 +10,7 @@ if (config.childDirectedAssessment?.status !== "not_assessed") failures.push("ch
 if (config.complianceAudit?.status !== "not_started") failures.push("compliance audit must remain not started");
 if (config.apiProject?.projectCountForClient !== 0) failures.push("no API Project may be assigned in the default staging package");
 if (config.apiProject?.projectId !== null || config.apiProject?.apiKeyFingerprint !== null) failures.push("no API Project ID or API key fingerprint may be present");
+if (config.apiProject?.crossClientUniquenessReviewStatus !== "not_started" || config.apiProject?.crossClientUniquenessEvidenceRef !== null) failures.push("cross-client project uniqueness review must remain pending");
 if (config.controls?.projectProvisioningAllowed !== false ||
     config.controls?.credentialProvisioningAllowed !== false ||
     config.controls?.apiAccessAllowed !== false ||
