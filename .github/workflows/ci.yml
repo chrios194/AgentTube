@@ -2,7 +2,7 @@ name: YouTube API Client Compliance
 
 on:
   push:
-    branches: [master]
+    branches: ["**"]
   pull_request:
     branches: [master]
 
