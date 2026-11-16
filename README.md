@@ -1,4 +1,4 @@
-# ChatPDF - AI-Powered Document Assistant
+# AgentTube Video Analysis — AI-Powered YouTube Assistant
 
 ## Overview
 
@@ -41,8 +41,8 @@
 ### **1. Clone the repository**
 
 ```bash
-git clone https://github.com/TayyabAsghar/AgentTube.git
-cd agenttube
+git clone https://github.com/chrios194/AgentTube.git
+cd AgentTube
 ```
 
 ### **2. Install dependencies**
@@ -70,8 +70,10 @@ STRIPE_PUBLISH_KEY=<your_stripe_publish_key>
 SCHEMATIC_SECRET_KEY=<your__schematic_secret_key>
 NEXT_PUBLIC_SCHEMATIC_PUBLISH_KEY=<your_next_public_schematic_public_key>
 
-# Youtube Config
-YOUTUBE_API_KEY=<your_youtube_api_key>
+# YouTube Data API key is intentionally not provisioned.
+# Do not set YOUTUBE_API_KEY until config/youtube-api-client-compliance.json
+# records an approved API Client boundary, child-directed assessment,
+# required audit, and exactly one exclusive API Project.
 
 # Convex Config
 CONVEX_DEPLOYMENT=<your_convex_deployment>
@@ -179,3 +181,19 @@ Clicking **Change plan** will open a multi step schematic element modal to allow
 This project is licensed under the **MIT License**.
 
 ---
+
+
+## YouTube API Client compliance gate
+
+YouTube Data API access is **disabled by default**. The implemented video-analysis app is a separate API Client candidate from the `chrios194/youtube-automation-agent` creator-automation publisher. If both are confirmed as distinct API Clients, each must have exactly one exclusive Google API Project; neither app may share project credentials, and projects must never be created per channel to multiply quota.
+
+Before any API key is provisioned or used, the deployed product boundary, child-directed status, and any required compliance audit/approval must be documented in `config/youtube-api-client-compliance.json`. The API key itself must never be committed; only its SHA-256 fingerprint may be recorded. This app's YouTube Data API integration is read-only. YouTube write actions, project provisioning, credential provisioning, quota sharding, and per-channel project creation remain disabled.
+
+The transcript action uses `youtubei.js`/InnerTube rather than the official YouTube Data API. New transcript retrieval is separately disabled until a YouTube Terms-of-Service review is approved with evidence; existing per-user cached transcripts remain readable.
+
+Run the default-safe checks with:
+
+```bash
+npm run validate:youtube-api-compliance
+npm run test:youtube-api-compliance
+```
