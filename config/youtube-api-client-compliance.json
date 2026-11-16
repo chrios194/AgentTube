@@ -37,7 +37,9 @@
     "ownerApiClientId": null,
     "credentialsExclusiveToClient": false,
     "apiKeyProjectId": null,
-    "apiKeyFingerprint": null
+    "apiKeyFingerprint": null,
+    "crossClientUniquenessReviewStatus": "not_started",
+    "crossClientUniquenessEvidenceRef": null
   },
   "controls": {
     "projectProvisioningAllowed": false,
