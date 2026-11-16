@@ -21,7 +21,6 @@ const GetVideoDetails = async (videoId: string) => {
     const channelResponse = await youtube.channels.list({
       part: ["snippet", "statistics"],
       id: [videoDetails.snippet?.channelId || ""],
-      key: process.env.YOUTUBE_API_KEY,
     });
 
     const channelDetails = channelResponse.data.items?.[0];
