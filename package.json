@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "validate:youtube-api-compliance": "node scripts/validate-youtube-api-client-compliance.js",
+    "test:youtube-api-compliance": "node --test tests/youtube-api-client-compliance.test.js"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.17",
