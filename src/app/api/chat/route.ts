@@ -18,7 +18,7 @@ export const POST = async (req: NextRequest) => {
 
   const videoDetails = await GetVideoDetails(videoId);
 
-  if (videoDetails.error?.code === "YOUTUBE_API_CLIENT_COMPLIANCE_BLOCKED") {
+  if (videoDetails.error && "code" in videoDetails.error && videoDetails.error.code === "YOUTUBE_API_CLIENT_COMPLIANCE_BLOCKED") {
     return NextResponse.json(
       { error: "YouTube API access is disabled pending API Client compliance review." },
       { status: 503 }
