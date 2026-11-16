@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "apiClient": {
+    "id": "agenttube-video-analysis",
+    "productName": "AgentTube video-analysis application (user-facing brand identity not independently verified)",
+    "repository": "chrios194/AgentTube",
+    "boundaryStatus": "identified_pending_deployment_and_child_audience_review",
+    "service": "YouTube Data API v3",
+    "credentialType": "api_key",
+    "credentialEnvVar": "YOUTUBE_API_KEY",
+    "userAuthorization": "not_implemented_for_youtube"
+  },
+  "boundaryReview": {
+    "status": "identified_pending_deployment_and_child_audience_review",
+    "reviewedAt": "2026-11-17",
+    "evidenceRefs": [
+      "package.json: googleapis dependency",
+      "src/actions/GetVideoDetails.ts: videos.list and channels.list use YOUTUBE_API_KEY",
+      "src/app/api/chat/route.ts: server-side video analysis invokes GetVideoDetails",
+      "deployment identity and actual production URL not verified"
+    ]
+  },
+  "childDirectedAssessment": {
+    "status": "not_assessed",
+    "evidenceRefs": [],
+    "googleNotificationStatus": "not_assessed",
+    "coppaGdprReviewStatus": "not_assessed",
+    "personalizedAdsEnabled": null
+  },
+  "complianceAudit": {
+    "status": "not_started",
+    "evidenceRef": null
+  },
+  "apiProject": {
+    "projectCountForClient": 0,
+    "projectId": null,
+    "ownerApiClientId": null,
+    "credentialsExclusiveToClient": false,
+    "apiKeyProjectId": null,
+    "apiKeyFingerprint": null
+  },
+  "controls": {
+    "projectProvisioningAllowed": false,
+    "credentialProvisioningAllowed": false,
+    "apiAccessAllowed": false,
+    "writeActionsAllowed": false,
+    "quotaShardingAllowed": false,
+    "perChannelProjectCreationAllowed": false
+  },
+  "transcriptAccess": {
+    "method": "youtubei.js/InnerTube",
+    "allowed": false,
+    "reviewStatus": "not_started",
+    "evidenceRef": null
+  }
+}
