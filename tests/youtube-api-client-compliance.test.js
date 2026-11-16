@@ -30,6 +30,8 @@ function approvedConfig() {
   config.apiProject.credentialsExclusiveToClient = true;
   config.apiProject.apiKeyProjectId = config.apiProject.projectId;
   config.apiProject.apiKeyFingerprint = fingerprint("test-key");
+  config.apiProject.crossClientUniquenessReviewStatus = "approved";
+  config.apiProject.crossClientUniquenessEvidenceRef = "review:cross-client-project-uniqueness";
   config.controls.apiAccessAllowed = true;
   return config;
 }
@@ -61,6 +63,15 @@ test("multiple projects and shared credentials are rejected", () => {
   assert.equal(state.allowed, false);
   assert.ok(state.blockers.some(item => item.includes("exactly one API Project")));
   assert.ok(state.blockers.some(item => item.includes("exclusive")));
+});
+
+test("cross-client project uniqueness review is mandatory", () => {
+  const config = approvedConfig();
+  config.apiProject.crossClientUniquenessReviewStatus = "not_started";
+  config.apiProject.crossClientUniquenessEvidenceRef = null;
+  const state = getYouTubeApiClientComplianceState({ config, apiKey: "test-key" });
+  assert.equal(state.allowed, false);
+  assert.ok(state.blockers.some(item => item.includes("cross-client API Project uniqueness review")));
 });
 
 test("API Project must belong to this API Client and key must map to that project", () => {
