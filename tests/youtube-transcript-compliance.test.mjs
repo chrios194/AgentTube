@@ -10,7 +10,7 @@ const read = (relative) => readFileSync(path.join(root, relative), "utf8");
 test("server action fails closed and has no unofficial transcript or storage client", () => {
   const source = read("src/actions/GetYoutubeTranscript.ts");
   assert.match(source, /YOUTUBE_TRANSCRIPT_UNAVAILABLE/);
-  assert.doesNotMatch(source, /from\\s+["\']youtubei\\.js["\']|Innertube\\.create|\\.getTranscript\\(|ConvexHttpClient/);
+  assert.doesNotMatch(source, /from\s+["\']youtubei\.js["\']|Innertube\.create|\.getTranscript\(|ConvexHttpClient/);
 });
 
 test("AI transcript tool returns a blocked result without invoking the server action", () => {
