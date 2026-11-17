@@ -33,9 +33,9 @@ const Features: FeatureType[] = [
     icon: ImagePlus,
   },
   {
-    title: "Auto Captions",
+    title: "Transcript review (paused)",
     description:
-      "Auto-generate captions and transcriptions in multiple languages.",
+      "Automated transcript retrieval is paused pending a compliant, authorized source. User-provided transcript text can be reviewed.",
     bgColor: "bg-yellow-200",
     icon: Captions,
   },
