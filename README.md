@@ -2,13 +2,13 @@
 
 ## Overview
 
-**AgentTube** is an AI-powered content creation assistant made with Next.JS that analyzes YouTube videos and enhances content generation using advanced AI models like Claude and Gemini. By providing a video link, users can generate transcripts, receive AI-suggested video titles, create improved or alternative scripts, and generate AI-powered thumbnails using OpenAI image generation model.
+**AgentTube** is an AI-powered content creation assistant made with Next.JS that analyzes YouTube videos and enhances content generation using advanced AI models like Claude and Gemini. By providing a video link, users can review video metadata and receive AI-suggested video titles, create improved or alternative scripts, and generate AI-powered thumbnails using OpenAI image generation model.
 
 ## Features
 
 - 📄 **Analyze Youtube Videos** - Paste Youtube videos or shorts lik to start the analysis.
 - 🤖 **AI Chat with Videos** - Get intelligent responses from your youtube videos.
-- 📝 **AI Agent TAsks** - You AI agent to perform certain tasks like generating videos transcripts, titles, improved or alternative scripts, and thumbnails using OpenAI image generation model.
+- 📝 **AI Agent TAsks** - You AI agent to perform certain tasks like generating titles, scripts from user-provided source material, and thumbnails using OpenAI image generation model.
 - 📊 **Subscription Plans** - Free, starter, creator & enterprise with different limits.
 - ✨ **Subscription Plans Features** - Take granular control on each features with tokens for each plan managed through Schematic.
 - 🔒 **Authentication & Security** - Powered by Clerk.
@@ -184,3 +184,8 @@ This project is licensed under the **MIT License**.
 ## YouTube transcript compliance gate (2026-11-18)
 
 Transcript retrieval is temporarily disabled. The former implementation used `youtubei.js`/Innertube rather than the official YouTube API. Google policy prohibits scraping YouTube Applications or using non-YouTube-API technology to access/retrieve YouTube API Data: https://developers.google.com/youtube/terms/developer-policies/ . Do not restore transcript retrieval until a compliant, authorized source and data-retention/deletion controls are implemented. Public video metadata access through the official YouTube Data API remains a separate capability and requires this app's own exclusive API Project if credentials are provisioned. No project or API key was created by this change.
+
+
+## Transcript retrieval status — 2026-11-18
+
+Automated transcript retrieval is temporarily disabled. The previous `youtubei.js`/Innertube source was not an official YouTube API method. Do not claim that transcripts are fetched or cached. Users may provide transcript text they own or are authorized to use. An official YouTube captions workflow may be considered only for videos the authorizing user has permission to edit; it requires OAuth and a separate API Client compliance review.
