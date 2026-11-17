@@ -4,7 +4,6 @@ import generateTitle from "@/ai-tools/GenerateTitle";
 import generateImage from "@/ai-tools/GenerateImage";
 import { NextRequest, NextResponse } from "next/server";
 import GetVideoDetails from "@/actions/GetVideoDetails";
-import fetchTranscript from "@/ai-tools/FetchTranscript";
 import getVideoDetails from "@/ai-tools/GetVideoDeatils";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
@@ -46,7 +45,6 @@ export const POST = async (req: NextRequest) => {
     model,
     messages: [{ role: "system", content: systemMessage }, ...messages],
     tools: {
-      fetchTranscript: fetchTranscript,
       getVideoDetails: getVideoDetails,
       generateTitle: generateTitle(user.id),
       generateImage: generateImage(videoId, user.id),
