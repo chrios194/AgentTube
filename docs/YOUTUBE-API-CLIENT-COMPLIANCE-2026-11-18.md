@@ -26,6 +26,14 @@ A channel's audience and an individual video's Made for Kids designation are sep
 - The README no longer instructs operators to create a project or set a YouTube API key.
 - User-provided metadata or transcript text may be used only when the user owns it or is permitted to use it.
 
+## API Data retention and deletion requirements
+
+The current YouTube API Services Developer Policies require API Data storage to be limited to the applicable 30-calendar-day period unless a specific policy exception applies. After that period, the API Client must delete or refresh the stored data. Users must have a clear way to request deletion of stored data, and deletion must be completed as soon as possible and within seven calendar days. If a user revokes access through Google's security settings, the API Client must delete all API Data related to that user that was accessed or stored pursuant to that consent.
+
+Official policy sections: https://developers.google.com/youtube/terms/developer-policies/ (Section III.E, Authorized Data Usage and Data Storage).
+
+The repository contains a user-scoped Convex transcript deletion mutation, but this does not by itself prove a complete account-level deletion workflow, 30-day retention enforcement, or Google-permission-revocation deletion. No existing Convex transcript records were inspected or deleted, and no deployed Convex environment or retention job was verified. These controls remain release blockers. The new fail-closed API gate prevents new YouTube Data API metadata calls from this draft while the review is incomplete.
+
 ## Provisioning and release state
 
 - API Client boundary: identified from implemented source.
