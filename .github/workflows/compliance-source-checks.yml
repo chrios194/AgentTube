@@ -2,7 +2,7 @@ name: Compliance source checks
 
 on:
   push:
-    branches: [master]
+    branches: [master, compliance/disable-unofficial-transcripts-20261118]
   pull_request:
     branches: [master]
   workflow_dispatch:
@@ -18,5 +18,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Validate package lock and install dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Run transcript compliance guards
-        run: node --test tests/*.test.mjs
+        run: npm test
