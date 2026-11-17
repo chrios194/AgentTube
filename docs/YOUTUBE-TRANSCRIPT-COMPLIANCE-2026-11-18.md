@@ -20,6 +20,9 @@ https://developers.google.com/youtube/terms/developer-policies/
 - The `youtubei.js` dependency was removed from `package.json` and pruned from the lockfile. CI must verify `npm ci` accepts the updated lockfile.
 - Audit existing Convex transcript records for retention/deletion obligations and document user deletion handling.
 - If transcripts are restored, use only an official, authorized captions workflow where the current user has the required rights. Do not use an API key to retrieve captions for arbitrary third-party videos.
+- The official `captions.list` method returns caption-track metadata, not caption text; it requires OAuth with `youtube.force-ssl` or `youtubepartner` and costs 50 quota units: https://developers.google.com/youtube/data/reference/rest/v3/captions/list
+- The official `captions.download` method returns the caption track, costs 200 quota units, and explicitly requires the authorized user to have permission to edit the video: https://developers.google.com/youtube/data/reference/rest/v3/captions/download
+- Therefore the official captions API is not a general replacement for downloading transcripts from arbitrary public videos. Keep the feature disabled until a user-authorized, rights-checked workflow is implemented and the app's API Client review is complete.
 - This analysis application is a separate API Client from `youtube-automation-agent`; if it continues using YouTube Data API credentials, it needs its own exclusive API Project. No project or API key is provisioned by this change.
 - Final child-directed assessment and deployment identity remain pending owner attestation and audience/marketing evidence.
 
