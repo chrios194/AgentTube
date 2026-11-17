@@ -17,8 +17,13 @@ export const POST = async (req: NextRequest) => {
 
   const videoDetails = await GetVideoDetails(videoId);
 
-  if (videoDetails.error)
-    return NextResponse.json({ error: "Not Found" }, { status: 404 });
+  if (videoDetails.error) {
+    const complianceBlocked = videoDetails.error.code === "YOUTUBE_API_COMPLIANCE_BLOCKED";
+    return NextResponse.json(
+      { error: videoDetails.error.description, code: videoDetails.error.code },
+      { status: complianceBlocked ? 503 : 404 }
+    );
+  }
 
   const google = createGoogleGenerativeAI({
     apiKey: process.env.GEMINI_API_KEY,
