@@ -3,6 +3,10 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const { getYouTubeApiAccessState } = require("../src/lib/youtube-api-access.js");
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (relative) => readFileSync(path.join(root, relative), "utf8");
@@ -36,4 +40,39 @@ test("unofficial transcript client is removed from the direct dependency manifes
   assert.equal(manifest.dependencies?.["youtubei.js"], undefined);
   assert.equal(lock.packages?.[""]?.dependencies?.["youtubei.js"], undefined);
   assert.equal(lock.packages?.["node_modules/youtubei.js"], undefined);
+});
+
+
+test("official YouTube Data API metadata access remains fail-closed", () => {
+  const state = getYouTubeApiAccessState();
+  assert.equal(state.allowed, false);
+  assert.equal(state.code, "YOUTUBE_API_COMPLIANCE_BLOCKED");
+  assert.match(state.message, /child-directed assessment/i);
+});
+
+test("metadata action checks compliance before dynamically loading googleapis", () => {
+  const source = read("src/actions/GetVideoDetails.ts");
+  const gate = source.indexOf("if (!access.allowed)");
+  const apiImport = source.indexOf('await import("googleapis")');
+  assert.ok(gate >= 0, "metadata action must check the compliance gate");
+  assert.ok(apiImport > gate, "Google API client must load only after the gate");
+  assert.doesNotMatch(source, /import\\s+\\{\\s*google\\s*\\}\\s+from\\s+["']googleapis["']/);
+});
+
+test("chat route returns 503 for a compliance-blocked metadata request", () => {
+  const source = read("src/app/api/chat/route.ts");
+  assert.match(source, /YOUTUBE_API_COMPLIANCE_BLOCKED/);
+  assert.match(source, /complianceBlocked \\? 503 : 404/);
+});
+
+test("metadata panel displays the compliance explanation instead of a generic error", () => {
+  const source = read("src/components/features/YoutubeVideoDetails.tsx");
+  assert.match(source, /role="alert"/);
+  assert.doesNotMatch(source, /Error is here/);
+});
+
+test("README does not instruct users to provision a YouTube API key", () => {
+  const source = read("README.md");
+  assert.match(source, /Do not create a Google Cloud project or set YOUTUBE_API_KEY/i);
+  assert.doesNotMatch(source, /YOUTUBE_API_KEY=<your_youtube_api_key>/);
 });
