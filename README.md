@@ -179,3 +179,8 @@ Clicking **Change plan** will open a multi step schematic element modal to allow
 This project is licensed under the **MIT License**.
 
 ---
+
+
+## YouTube transcript compliance gate (2026-11-18)
+
+Transcript retrieval is temporarily disabled. The former implementation used `youtubei.js`/Innertube rather than the official YouTube API. Google policy prohibits scraping YouTube Applications or using non-YouTube-API technology to access/retrieve YouTube API Data: https://developers.google.com/youtube/terms/developer-policies/ . Do not restore transcript retrieval until a compliant, authorized source and data-retention/deletion controls are implemented. Public video metadata access through the official YouTube Data API remains a separate capability and requires this app's own exclusive API Project if credentials are provisioned. No project or API key was created by this change.
