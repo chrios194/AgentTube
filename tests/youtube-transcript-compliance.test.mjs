@@ -62,7 +62,7 @@ test("metadata action checks compliance before dynamically loading googleapis", 
 test("chat route returns 503 for a compliance-blocked metadata request", () => {
   const source = read("src/app/api/chat/route.ts");
   assert.match(source, /YOUTUBE_API_COMPLIANCE_BLOCKED/);
-  assert.match(source, /complianceBlocked \\? 503 : 404/);
+  assert.ok(source.includes("{ status: complianceBlocked ? 503 : 404 }"));
 });
 
 test("metadata panel displays the compliance explanation instead of a generic error", () => {
