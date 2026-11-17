@@ -30,3 +30,10 @@ test("transcription UI does not invoke the old server action", () => {
   assert.doesNotMatch(source, /GetYoutubeTranscript|useEffect|youtubei\.js|Innertube/);
   assert.match(source, /Transcription temporarily unavailable/);
 });
+test("unofficial transcript client is removed from the direct dependency manifest and lockfile", () => {
+  const manifest = JSON.parse(read("package.json"));
+  const lock = JSON.parse(read("package-lock.json"));
+  assert.equal(manifest.dependencies?.["youtubei.js"], undefined);
+  assert.equal(lock.packages?.[""]?.dependencies?.["youtubei.js"], undefined);
+  assert.equal(lock.packages?.["node_modules/youtubei.js"], undefined);
+});
