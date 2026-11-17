@@ -14,11 +14,13 @@ jobs:
   transcript-compliance:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          node-version: 22
+          node-version: 24
       - name: Validate package lock and install dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Run transcript compliance guards
+      - name: Run transcript and API access compliance guards
         run: npm test
+      - name: TypeScript validation
+        run: npx tsc --noEmit
