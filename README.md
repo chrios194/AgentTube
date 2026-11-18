@@ -189,3 +189,8 @@ Transcript retrieval is temporarily disabled. The former implementation used `yo
 ## Transcript retrieval status — 2026-11-18
 
 Automated transcript retrieval is temporarily disabled. The previous `youtubei.js`/Innertube source was not an official YouTube API method. Do not claim that transcripts are fetched or cached. Users may provide transcript text they own or are authorized to use. An official YouTube captions workflow may be considered only for videos the authorizing user has permission to edit; it requires OAuth and a separate API Client compliance review.
+
+
+## YouTube API Data handling — 2026-11-19
+
+See docs/YOUTUBE-API-DATA-HANDLING-2026-11-19.md. API Data collection/storage remain disabled; no unofficial scraping or undocumented endpoints are allowed; retention/deletion controls are documented but not verified in deployment. Cross-channel aggregation remains disabled.
