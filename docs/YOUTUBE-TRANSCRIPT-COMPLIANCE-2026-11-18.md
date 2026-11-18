@@ -9,6 +9,7 @@ https://developers.google.com/youtube/terms/developer-policies/
 ## Changes in this draft
 
 - The server action fails closed with `YOUTUBE_TRANSCRIPT_UNAVAILABLE`; it no longer imports Innertube or writes new transcript data to Convex.
+- The Convex transcript read queries and write mutation also fail closed with `YOUTUBE_TRANSCRIPT_STORAGE_DISABLED`. This closes the direct Convex-function bypass left by disabling only the Next.js action and UI. The existing per-record delete mutation is retained; this change does not enumerate, read, or delete existing records.
 - The AI transcript tool returns a blocked result and does not call the server action.
 - The chat route no longer exposes the transcript tool and tells the model not to attempt transcript retrieval.
 - The Transcription UI displays an explicit disabled notice and does not invoke the server action.
@@ -18,7 +19,7 @@ https://developers.google.com/youtube/terms/developer-policies/
 ## Remaining work
 
 - The `youtubei.js` dependency was removed from `package.json` and pruned from the lockfile. CI must verify `npm ci` accepts the updated lockfile.
-- Audit existing Convex transcript records for retention/deletion obligations and document user deletion handling.
+- Audit existing Convex transcript records for retention/deletion obligations and document user deletion handling. Existing records remain uninspected and untouched because the deployed Convex environment is not connected and no data-deletion approval was provided.
 - If transcripts are restored, use only an official, authorized captions workflow where the current user has the required rights. Do not use an API key to retrieve captions for arbitrary third-party videos.
 - The official `captions.list` method returns caption-track metadata, not caption text; it requires OAuth with `youtube.force-ssl` or `youtubepartner` and costs 50 quota units: https://developers.google.com/youtube/data/reference/rest/v3/captions/list
 - The official `captions.download` method returns the caption track, costs 200 quota units, and explicitly requires the authorized user to have permission to edit the video: https://developers.google.com/youtube/data/reference/rest/v3/captions/download
