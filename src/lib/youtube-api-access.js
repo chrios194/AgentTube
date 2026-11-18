@@ -1,20 +1,34 @@
 "use strict";
 
-// This application is a separate YouTube API Client from the publisher product.
+// This application is a separate YouTube API Client candidate from the publisher product.
 // Keep access hard-disabled until the central boundary review, final child-directed
-// assessment, required audit/approval, exclusive project mapping, and least-privilege
-// scope review are documented. Do not replace this with an environment-variable bypass.
+// assessment, required audit/approval, exclusive project mapping, least-privilege review,
+// and deployed API Data retention/deletion verification are complete. Do not replace
+// this with an environment-variable bypass.
 const YOUTUBE_API_ACCESS_ENABLED = false;
+const DATA_HANDLING_POLICY = require("../../config/youtube-api-data-handling.json");
+
+const POLICY_BLOCKERS = Object.freeze([
+  "API Client boundary and child-directed assessment are not approved",
+  "API Data collection and storage are disabled",
+  "deployed Convex storage inventory and retention jobs are not verified",
+  "user deletion and both authorization-revocation deletion paths are not verified",
+  "cross-channel API Data aggregation is disabled and not yet deployment-verified"
+]);
 
 const BLOCKED_STATE = Object.freeze({
-  allowed: YOUTUBE_API_ACCESS_ENABLED,
+  allowed: YOUTUBE_API_ACCESS_ENABLED &&
+    DATA_HANDLING_POLICY.status === "approved" &&
+    DATA_HANDLING_POLICY.api_data_collection_enabled === true &&
+    DATA_HANDLING_POLICY.api_data_storage_enabled === true,
   code: "YOUTUBE_API_COMPLIANCE_BLOCKED",
   message:
-    "Official YouTube metadata access is paused until this application's API Client review, child-directed assessment, required compliance audit or documented not-required decision, exclusive API Project mapping, and least-privilege review are complete. Do not create or add a YOUTUBE_API_KEY."
+    "Official YouTube metadata access is paused until this application's API Client review, child-directed assessment, required compliance audit or documented not-required decision, exclusive API Project mapping, least-privilege review, and deployed API Data retention/deletion verification are complete. Do not create or add a YOUTUBE_API_KEY.",
+  blockers: POLICY_BLOCKERS
 });
 
 function getYouTubeApiAccessState() {
   return BLOCKED_STATE;
 }
 
-module.exports = { getYouTubeApiAccessState };
+module.exports = { getYouTubeApiAccessState, DATA_HANDLING_POLICY };
