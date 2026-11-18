@@ -20,10 +20,10 @@ test("server action fails closed and has no unofficial transcript or storage cli
 test("Convex transcript queries and mutations are fail-closed, not just the UI/server action", () => {
   const source = read("convex/transcript.ts");
   assert.equal((source.match(/YOUTUBE_TRANSCRIPT_STORAGE_DISABLED/g) || []).length, 3);
-  assert.doesNotMatch(source, /\\.query\\(["']transcript["']\\)/);
-  assert.doesNotMatch(source, /\\.insert\\(["']transcript["']/);
-  assert.match(source, /export const deleteTranscript = mutation/);
-  assert.match(source, /transcript\\.userId !== args\\.userId/);
+  assert.equal(source.includes('.query("transcript")'), false);
+  assert.equal(source.includes('.insert("transcript"'), false);
+  assert.ok(source.includes("export const deleteTranscript = mutation"));
+  assert.ok(source.includes("transcript.userId !== args.userId"));
 });
 
 test("AI transcript tool returns a blocked result without invoking the server action", () => {
