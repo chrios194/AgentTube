@@ -12,8 +12,10 @@ const POLICY_BLOCKERS = Object.freeze([
   "API Client boundary and child-directed assessment are not approved",
   "API Data collection and storage are disabled",
   "deployed Convex storage inventory and retention jobs are not verified",
-  "user deletion and both authorization-revocation deletion paths are not verified",
-  "cross-channel API Data aggregation is disabled and not yet deployment-verified"
+  "30-day retention and Analytics authorization/video-existence rechecks are not deployment-verified",
+  "user deletion, immediate token revocation, 7-day client-revocation deletion, and 30-day Google Security Settings deletion are not verified",
+  "cross-account, cross-channel, and cross-content-owner API Data aggregation are disabled and not yet deployment-verified",
+  "the exact deployed environment and commit have not been verified"
 ]);
 
 const BLOCKED_STATE = Object.freeze({
