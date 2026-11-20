@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.17",
@@ -35,7 +36,6 @@
     "sonner": "^2.0.1",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
-    "youtubei.js": "^13.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {

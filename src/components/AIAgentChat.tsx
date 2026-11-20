@@ -70,9 +70,7 @@ const AIAgentChat = ({ userId, videoId }: AIAgentChatProps) => {
     const userMessage: Message = {
       id: `generate-script-${randomId}`,
       role: "user",
-      content: `Use Vide transcript and analyze it after that generate a step-by-step shooting script for this video that I can use on my own 
-      channel to produce a video that is similar to this one. Don't do any other steps such as generating an image, just generate the script 
-      only!`,
+      content: `Use only the video metadata already available and any transcript text I provide. If no authorized transcript text is available, say so and ask me to provide text I own or am permitted to use. Do not invent details about the video's scenes, claims, or structure. Then generate a step-by-step shooting script. Do not generate an image.`,
     };
 
     append(userMessage);
