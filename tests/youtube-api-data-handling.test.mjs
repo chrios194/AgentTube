@@ -50,9 +50,16 @@ test("cross-channel and cross-content-owner API Data aggregation remain disabled
   assert.equal(policy.cross_channel_api_data_aggregation_allowed, false);
   assert.equal(policy.cross_content_owner_api_data_aggregation_allowed, false);
   assert.equal(policy.central_dashboard_api_data_access, "operational_metadata_only");
+  const state = getYouTubeApiAccessState();
+  assert.ok(state.blockers.some(value => value.includes("cross-content-owner")));
 });
 
 test("deployed storage, retention, user deletion, and revocation controls are not falsely marked verified", () => {
   for (const status of Object.values(policy.deployed_verification)) assert.equal(status, "not_verified");
   assert.equal(policy.api_client_approval_ref, null);
+  assert.equal(policy.deployed_verification.deployed_environment_and_commit, "not_verified");
+  assert.equal(policy.deployed_verification.complete_storage_inventory, "not_verified");
+  assert.equal(policy.deployed_verification.analytics_active_user_consent, "not_verified");
+  assert.equal(policy.deployed_verification.cross_account_aggregation_disabled, "not_verified");
+  assert.equal(policy.deployed_verification.cross_content_owner_aggregation_disabled, "not_verified");
 });
