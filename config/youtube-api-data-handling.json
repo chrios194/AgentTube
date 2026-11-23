@@ -36,6 +36,56 @@
     "complete_storage_inventory": "not_verified",
     "analytics_active_user_consent": "not_verified",
     "cross_account_aggregation_disabled": "not_verified",
-    "cross_content_owner_aggregation_disabled": "not_verified"
+    "cross_content_owner_aggregation_disabled": "not_verified",
+    "audiovisual_copy_controls": "not_verified",
+    "derived_metrics_exception_controls": "not_verified",
+    "write_action_consent_controls": "not_verified",
+    "automated_engagement_write_controls": "not_verified"
+  },
+  "reviewed_at": "2026-11-24",
+  "audiovisual_content": {
+    "download_without_prior_written_approval_allowed": false,
+    "import_without_prior_written_approval_allowed": false,
+    "backup_without_prior_written_approval_allowed": false,
+    "cache_without_prior_written_approval_allowed": false,
+    "storage_without_prior_written_approval_allowed": false,
+    "prior_written_youtube_approval_required": true,
+    "source_provenance_required": true,
+    "allowed_sources": [
+      "original_source_files",
+      "user_supplied_files",
+      "rights_holder_assets_obtained_through_authorized_sources"
+    ],
+    "public_youtube_url_is_permission_to_download": false
+  },
+  "derived_metrics": {
+    "enabled_by_default": false,
+    "exception_requires_additional_policies_amendment_acceptance": true,
+    "exception_requires_analytics_reporting_use_case": true,
+    "exception_requires_compliance_audit_approval": true,
+    "exception_requires_standard_quota_extension_approval": true,
+    "exception_requires_specific_metrics_and_storage_approval": true,
+    "exception_max_storage_calendar_months": 36,
+    "derived_metrics_must_be_distinguished_from_raw_api_data": true,
+    "cross_channel_api_data_aggregation_allowed": false,
+    "cross_content_owner_api_data_aggregation_allowed": false,
+    "central_leaderboard_api_data_allowed": false,
+    "central_leaderboard_source": "independently_generated_non_youtube_operational_metrics_only"
+  },
+  "write_actions": {
+    "prior_specific_express_user_consent_required": true,
+    "consent_required_per_api_action": true,
+    "consent_must_bind_api_client_channel_resource_payload_hash_visibility": true,
+    "consent_single_use": true,
+    "consent_atomic_consumption": true,
+    "consent_consumed_immediately_before_adapter_dispatch": true,
+    "consent_replay_allowed": false,
+    "user_controls_final_submitted_values": true,
+    "submitted_values_locked_after_approval": true,
+    "renewed_consent_required_after_any_submitted_value_change": true,
+    "child_directed_api_client_write_actions_allowed": false,
+    "automated_views_likes_comments_subscriptions_allowed": false,
+    "automated_engagement_manipulation_allowed": false,
+    "publishing_allowed": false
   }
 }
