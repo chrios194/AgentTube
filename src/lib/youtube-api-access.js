@@ -15,6 +15,9 @@ const POLICY_BLOCKERS = Object.freeze([
   "30-day retention and Analytics authorization/video-existence rechecks are not deployment-verified",
   "user deletion, immediate token revocation, 7-day client-revocation deletion, and 30-day Google Security Settings deletion are not verified",
   "cross-account, cross-channel, and cross-content-owner API Data aggregation are disabled and not yet deployment-verified",
+  "YouTube audiovisual content copying is prohibited without prior written approval and recorded source provenance",
+  "YouTube API Data-derived metrics are disabled until the exact Analytics amendment, audit, quota extension, and metric/storage approvals are verified",
+  "YouTube write actions and automated engagement actions remain disabled pending exact single-use consent and deployed enforcement",
   "the exact deployed environment and commit have not been verified"
 ]);
 
