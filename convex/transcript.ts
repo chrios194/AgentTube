@@ -6,13 +6,8 @@ export const getTranscriptByVideoId = query({
     videoId: v.string(),
     userId: v.string(),
   },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("transcript")
-      .withIndex("by_user_and_video", (q) =>
-        q.eq("userId", args.userId).eq("videoId", args.videoId)
-      )
-      .unique();
+  handler: async () => {
+    throw new Error("YOUTUBE_TRANSCRIPT_STORAGE_DISABLED");
   },
 });
 
@@ -27,21 +22,8 @@ export const storeTranscript = mutation({
       })
     ),
   },
-  handler: async (ctx, args) => {
-    const existingTranscript = await ctx.db
-      .query("transcript")
-      .withIndex("by_user_and_video", (q) =>
-        q.eq("userId", args.userId).eq("videoId", args.videoId)
-      )
-      .unique();
-
-    if (existingTranscript) return existingTranscript;
-
-    return await ctx.db.insert("transcript", {
-      videoId: args.videoId,
-      userId: args.userId,
-      transcript: args.transcript,
-    });
+  handler: async () => {
+    throw new Error("YOUTUBE_TRANSCRIPT_STORAGE_DISABLED");
   },
 });
 
@@ -49,14 +31,13 @@ export const getTranscriptsByUserId = query({
   args: {
     userId: v.string(),
   },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("transcript")
-      .withIndex("by_user_id", (q) => q.eq("userId", args.userId))
-      .collect();
+  handler: async () => {
+    throw new Error("YOUTUBE_TRANSCRIPT_STORAGE_DISABLED");
   },
 });
 
+// Retained for a user-initiated cleanup path. This change does not enumerate,
+// read, or delete existing records and does not claim account-wide deletion.
 export const deleteTranscript = mutation({
   args: { id: v.id("transcript"), userId: v.string() },
   handler: async (ctx, args) => {

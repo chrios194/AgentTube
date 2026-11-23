@@ -1,19 +1,19 @@
 import { z } from "zod";
 import { tool } from "ai";
-import { GetYoutubeTranscript } from "@/actions/GetYoutubeTranscript";
 
 const fetchTranscript = tool({
-  description: "Fetch the transcript of a YouTube video in segments",
+  description:
+    "Disabled: transcript retrieval is unavailable until an official, authorized YouTube captions source is implemented.",
   parameters: z.object({
-    videoId: z.string().describe("The video ID to fetch the transcript for"),
+    videoId: z.string().describe("The video ID whose transcript was requested"),
   }),
-  execute: async ({ videoId }) => {
-    const transcript = await GetYoutubeTranscript(videoId);
-    return {
-      cache: transcript.cache,
-      transcript: transcript.transcript,
-    };
-  },
+  execute: async ({ videoId }) => ({
+    available: false,
+    code: "YOUTUBE_TRANSCRIPT_UNAVAILABLE",
+    videoId,
+    message:
+      "No transcript was fetched or stored. The previous transcript source used a non-official YouTube interface and is disabled pending a compliant, authorized source.",
+  }),
 });
 
 export default fetchTranscript;

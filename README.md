@@ -2,13 +2,13 @@
 
 ## Overview
 
-**AgentTube** is an AI-powered content creation assistant made with Next.JS that analyzes YouTube videos and enhances content generation using advanced AI models like Claude and Gemini. By providing a video link, users can generate transcripts, receive AI-suggested video titles, create improved or alternative scripts, and generate AI-powered thumbnails using OpenAI image generation model.
+**AgentTube** is an AI-powered content-creation assistant built with Next.js. YouTube transcript retrieval and official YouTube metadata API access are paused in this draft pending the separate API Client compliance review. Users may work from metadata and transcript text they provide and are permitted to use; the application must not invent details about a video.
 
 ## Features
 
-- 📄 **Analyze Youtube Videos** - Paste Youtube videos or shorts lik to start the analysis.
+- 📄 **Video analysis (limited)** - Organize an analysis workflow using user-provided metadata or transcript text; automated YouTube API metadata and transcript retrieval are paused pending compliance review.
 - 🤖 **AI Chat with Videos** - Get intelligent responses from your youtube videos.
-- 📝 **AI Agent TAsks** - You AI agent to perform certain tasks like generating videos transcripts, titles, improved or alternative scripts, and thumbnails using OpenAI image generation model.
+- 📝 **AI Agent TAsks** - You AI agent to perform certain tasks like generating titles, scripts from user-provided source material, and thumbnails using OpenAI image generation model.
 - 📊 **Subscription Plans** - Free, starter, creator & enterprise with different limits.
 - ✨ **Subscription Plans Features** - Take granular control on each features with tokens for each plan managed through Schematic.
 - 🔒 **Authentication & Security** - Powered by Clerk.
@@ -25,7 +25,7 @@
 ### **Backend & Services**
 
 - **Convex** - User and youtube analyzed data storage
-- **Google APIs** - Get youtube data of a video to analyze
+- **YouTube API access** - Disabled by default pending API Client boundary, child-directed, audit, project, and scope review.
 - **Clerk** - Authentication & User Management
 - **Stripe** - Subscription & Payment Handling
 - **Schematic** - Divide services in tokens and help stripe to charge users appropriately
@@ -70,8 +70,8 @@ STRIPE_PUBLISH_KEY=<your_stripe_publish_key>
 SCHEMATIC_SECRET_KEY=<your__schematic_secret_key>
 NEXT_PUBLIC_SCHEMATIC_PUBLISH_KEY=<your_next_public_schematic_public_key>
 
-# Youtube Config
-YOUTUBE_API_KEY=<your_youtube_api_key>
+# YouTube Data API access is disabled pending the separate API Client compliance review.
+# Do not create a Google Cloud project or set YOUTUBE_API_KEY while the gate is disabled.
 
 # Convex Config
 CONVEX_DEPLOYMENT=<your_convex_deployment>
@@ -142,13 +142,13 @@ This is the screen use lands on after the youtube video has been analyzed. It is
 
 - **Video Token Count Section** – A token counts showing user that how many tokens he has left for the month and a status bar showing wether the video analysis happened by spending a token or by caches for user database.
 
-- **Video details Section** – This sections showcase youtube video metadata like Thumbnail, Title, User name, Channel name and etc.
+- **Video details Section** – Official metadata retrieval is paused pending compliance review; the panel explains the restriction. Users may provide metadata they own or are permitted to use.
 
 - **Thumbnail Generation Section** – A thumbnail generation section contains the list of all the ai generated thumbnails related to this video and the total count of thumbnails tokens spend by the user.
 
 - **Title Generation Section** – Just like Thumbnail Generation Section, this contains the list of all the ai generated titles related to this video and the total count of titles tokens spend by the user in a month.
 
-- **Transcription Section** – A transcription section for video that is used by AI agent tools as context for creating script and the total count of scripts fetched by the application.
+- **Transcription Section** – Automated transcript retrieval is paused. Users may provide transcript text they own or are permitted to use.
 
 ![Analyze Page](/public/screenshots/analyze-page.png)
 
@@ -179,3 +179,18 @@ Clicking **Change plan** will open a multi step schematic element modal to allow
 This project is licensed under the **MIT License**.
 
 ---
+
+
+## YouTube transcript compliance gate (2026-11-18)
+
+Transcript retrieval is temporarily disabled. The former implementation used `youtubei.js`/Innertube rather than the official YouTube API. Google policy prohibits scraping YouTube Applications or using non-YouTube-API technology to access/retrieve YouTube API Data: https://developers.google.com/youtube/terms/developer-policies/ . Do not restore transcript retrieval until a compliant, authorized source and data-retention/deletion controls are implemented. Official YouTube Data API metadata access is also fail-closed in this draft. The gate returns a compliance-blocked result before loading the Google API client or reading YOUTUBE_API_KEY. Do not create a project, API key, OAuth credential, or user token until the actual application boundary, final child-directed assessment, required audit/approval, and least-privilege review are documented.
+
+
+## Transcript retrieval status — 2026-11-18
+
+Automated transcript retrieval is temporarily disabled. The previous `youtubei.js`/Innertube source was not an official YouTube API method. Do not claim that transcripts are fetched or cached. Users may provide transcript text they own or are authorized to use. An official YouTube captions workflow may be considered only for videos the authorizing user has permission to edit; it requires OAuth and a separate API Client compliance review.
+
+
+## YouTube API Data handling — 2026-11-19
+
+See docs/YOUTUBE-API-DATA-HANDLING-2026-11-19.md. API Data collection/storage remain disabled; no unofficial scraping or undocumented endpoints are allowed; retention/deletion controls are documented but not verified in deployment. Cross-channel aggregation remains disabled.

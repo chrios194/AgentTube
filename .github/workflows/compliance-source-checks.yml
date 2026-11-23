@@ -1,0 +1,26 @@
+name: Compliance source checks
+
+on:
+  push:
+    branches: [master, compliance/disable-unofficial-transcripts-20261118]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  transcript-compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Validate package lock and install dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Run transcript and API access compliance guards
+        run: npm test
+      - name: TypeScript validation
+        run: npx tsc --noEmit

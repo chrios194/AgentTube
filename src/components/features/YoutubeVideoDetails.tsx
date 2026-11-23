@@ -16,7 +16,7 @@ interface YoutubeVideoDetailsProps {
 }
 
 const YoutubeVideoDetails = ({ userId, videoId }: YoutubeVideoDetailsProps) => {
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const createChat = useMutation(api.chats.createChat);
   const [video, setVideo] = useState<VideoDetails | null>(null);
 
@@ -39,9 +39,9 @@ const YoutubeVideoDetails = ({ userId, videoId }: YoutubeVideoDetailsProps) => {
 
       if (response.error) {
         toast.error(response.error.description);
-        setError(true);
+        setError(response.error.description);
       } else {
-        setError(false);
+        setError(null);
         setVideo(response.video);
       }
     };
@@ -51,7 +51,7 @@ const YoutubeVideoDetails = ({ userId, videoId }: YoutubeVideoDetailsProps) => {
 
   if (!video && !error) return <Spinner />;
 
-  if (!video || error) return <>Error is here</>;
+  if (!video || error) return <div role="alert" className="rounded-xl border p-4 text-sm text-muted-foreground">{error ?? "Video metadata is unavailable."}</div>;
 
   return (
     <div className="@container rounded-xl">
